@@ -2,7 +2,7 @@
 
 Proyecto ecommerce backend
 
-Para realizar pruebas locales se puede importar este [archivo](./postman_colletion.json)  en Postman y ver los endpoints disponibles.
+Para realizar pruebas locales se puede importar este [archivo](./postman_collection.json)  en Postman y ver los endpoints disponibles.
 
 # Endpoints
 
