@@ -5,8 +5,12 @@ const getProducts = async(req, res) => {
     const id = req.params.id || null;
 
     if (id !== null){
-        const filter = await product.getById(parseInt(id));
-        res.status(200).json(filter);
+        const producto = await product.getById(parseInt(id));
+        if (producto !== null){
+            res.status(200).json(producto);
+        } else {
+            res.status(400).json({error:'producto no encontrado'});
+        }
     } else {
         const productos = await product.getAll();        
         res.status(200).json(productos);
