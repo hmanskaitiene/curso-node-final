@@ -103,6 +103,17 @@ class Producto {
         }
     }
 
+    async addProducts(products){
+        try{
+            for(const p of products){
+                await this.save(p);
+            }
+        }
+        catch(e){
+            return `Hubo un error al actualizar el carrito: "${e}"`
+        }
+    }
+
 }
 
 module.exports = Producto;

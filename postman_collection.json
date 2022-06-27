@@ -26,13 +26,13 @@
 			"response": []
 		},
 		{
-			"name": "addProducto",
+			"name": "addProductos",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"nombre\": \"Cafetera\",\r\n        \"descripcion\": \"Esta es la descripcion de la cafetera\",\r\n        \"codigo\": \"AA0012\",\r\n        \"foto\": \"https://www.google.com/search\",\r\n        \"precio\": 200,\r\n        \"stock\": 500\r\n}",
+					"raw": "[\r\n    {\r\n        \"nombre\": \"Licuadora\",\r\n        \"descripcion\": \"Esta es la descripcion de la licuadora\",\r\n        \"codigo\": \"AA00XX\",\r\n        \"foto\": \"https://www.google.com/search\",\r\n        \"precio\": 200,\r\n        \"stock\": 500\r\n    },\r\n    {\r\n        \"nombre\": \"Aspiradora\",\r\n        \"descripcion\": \"Esta es la descripcion de la aspiradora\",\r\n        \"codigo\": \"AA00XX\",\r\n        \"foto\": \"https://www.google.com/search\",\r\n        \"precio\": 200,\r\n        \"stock\": 500\r\n    }\r\n]",
 					"options": {
 						"raw": {
 							"language": "json"

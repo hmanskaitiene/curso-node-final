@@ -17,10 +17,10 @@ const getProducts = async(req, res) => {
     }
 }
 
-const addProduct = async(req, res) => {
-    const producto = req.body;
-    const id = await product.save(producto)
-    res.status(201).json({id});
+const addProducts = async(req, res) => {
+    const productos = req.body;
+    await product.addProducts(productos);
+    res.status(201).json({mensaje: `Productos agregados`});
 }
 
 const updateProduct = async(req, res) => {
@@ -47,7 +47,7 @@ const deleteProduct = async (req, res) => {
 }
 module.exports = {
     getProducts,
-    addProduct,
+    addProducts,
     updateProduct,
     deleteProduct,
 }
