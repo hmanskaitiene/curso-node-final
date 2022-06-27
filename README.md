@@ -9,7 +9,7 @@ Para realizar pruebas locales se puede importar este [archivo](./postman_collect
 Productos
 
 - Obtener producto/s `GET /api/productos/:id?` 
-- Crear producto `POST /api/productos/`
+- Crear producto/s `POST /api/productos/`
 - Actualizar producto `PUT /api/productos/:id`
 - Eliminar producto `DELETE /api/productos/:id`
 
