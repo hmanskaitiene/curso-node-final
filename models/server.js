@@ -1,5 +1,7 @@
-const express = require('express');
-
+import express from 'express'
+import routerProductos from "../routes/productos.js"
+import routerCarrito from "../routes/carrito.js"
+import { mongoConnection } from '../config/db.js';
 class Server {
 
     constructor() {
@@ -12,8 +14,15 @@ class Server {
             carrito:     '/api/carrito',
         }
 
+        this.conectarDB();
         this.middlewares();
         this.routes();
+    }
+
+    async conectarDB(){
+        if (process.env.ENGINE == 'MONGODB'){
+            await mongoConnection();
+        }
     }
 
     middlewares() {
@@ -23,9 +32,9 @@ class Server {
     }
 
     routes() {
-        this.app.use( this.paths.productos, require('../routes/productos') );
-        this.app.use( this.paths.carrito, require('../routes/carrito') );
-        
+        this.app.use( this.paths.productos, routerProductos);
+        this.app.use( this.paths.carrito, routerCarrito );
+
         this.app.use('*', function(req, res){
             const path = req.originalUrl;
             const metodo = req.method;
@@ -44,4 +53,4 @@ class Server {
 
 }
 
-module.exports = Server;
+export default Server;

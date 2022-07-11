@@ -1,119 +1,56 @@
-const fs = require('fs').promises
-const db_path = './db'
+import mongoose from 'mongoose'
 
-class Producto {
-    constructor(filename = 'productos.json'){
-        this.filename = `${db_path}/${filename}`;
-    }
+const ProductoSchema = new mongoose.Schema({
+    nombre:{
+        type: String,
+        required: [true, 'El nombre es obligatorio'],
+    },
+    descripcion:{
+        type: String,
+        required: false,
+    },
+    codigo:{
+        type: String,
+        required: false,
+    },
+    foto:{
+        type: String,
+        required: false,
+    },
+    precio:{
+        type: Number,
+        required: [true, 'El precio es obligatorio'],
+    },
+    stock:{
+        type: Number,
+        required: [true, 'El stock es obligatorio'],
+    },
+    timestamp:{
+      type: Number,
+      required: true,
+  }
+});
 
-    
-    async save(producto) {
-        try{        
-            producto.id = await this.__getNextId();
-            producto.timestamp = Date.now();
-            const productos = await this.getAll();
-            productos.push(producto);
-            await fs.writeFile(this.filename,JSON.stringify(productos));
-            return producto.id;
-        }
-        catch(error){
-            return `Hubo un error "${error}"`
-        }
-    }
-    async getAll() {
-        try{
-            const info = await fs.readFile(this.filename,'utf-8')
-            const data = JSON.parse(info);
-            return data.map(p => p);
-        }
-        catch(error){
-            return `Hubo un error "${error}"`
-        }
-    }
-
-    async getById(id){
-
-        try{
-            if (typeof id === 'undefined') {
-                throw new Error(`Debe completar el id`);
-            }
-
-            const productos = await this.getAll();
-            const producto = productos.find(p => p.id === id);
-            
-            return typeof producto === 'undefined' ? null: producto;
-        }
-        catch(e){
-            return `Hubo un error "${e.message}"`
-        }
-    }
-    async deleteById(id){
-        try{
-            if (typeof id === 'undefined') {
-                throw new Error(`Debe completar el id`);
-            }
-
-            const productos = await this.getAll();
-            const index = productos.findIndex(p => {return p.id === id;});
-            //Por si no existe el producto
-            if (index > -1){
-                let productos = await this.getAll();
-                productos.splice(index, 1);
-                await fs.writeFile(this.filename,JSON.stringify(productos));
-            }
-        }
-        catch(e){
-            return `Hubo un error "${e.message}"`
-        }
-
-    }
-
-    async updateById(id, product){
-        try{
-            const productos = await this.getAll();
-            const index = productos.findIndex(p => p.id === id);
-
-            product.id = id;
-            productos[index] = product;
-            await fs.writeFile(this.filename,JSON.stringify(productos));
-        }
-        catch(e){
-            return `Hubo un error "${e.message}"`
-        }
-    }
-
-    async deleteAll(){
-        try{
-            await fs.writeFile(this.filename,"[]");
-        }
-        catch(e){
-            return `Hubo un error "${e}"`
-        }
-    }
-
-    async __getNextId(){
-        try{
-            const productos = await this.getAll();
-            const ids = productos.map(p => (p.id) );
-            
-            return ids.length === 0 ? 1 : Math.max(...ids) + 1;
-        }
-        catch(e){
-            return `Hubo un error "${e}"`
-        }
-    }
-
-    async addProducts(products){
-        try{
-            for(const p of products){
-                await this.save(p);
-            }
-        }
-        catch(e){
-            return `Hubo un error al actualizar el carrito: "${e}"`
-        }
-    }
-
+ProductoSchema.methods.toJSON = function(){
+  const {__v,_id,...data} = this.toObject();
+  data.id = _id;
+  return data;
 }
+/*
+https://stackoverflow.com/questions/28357965/mongoose-auto-increment
 
-module.exports = Producto;
+ProductoSchema.pre('save', async function() {
+    if(this.number) {
+      let counterDoc = await counterCollection.findOne()
+      if(!counterDoc) {
+        counterDoc = new counterCollection({number: 1})
+      } else {
+        counterDoc.number++
+      }
+      this.number = counterDoc.number
+      const response = await counterDoc.save()
+    }
+  })
+*/
+
+export default mongoose.model('Producto',ProductoSchema);

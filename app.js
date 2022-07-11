@@ -1,5 +1,8 @@
-require('dotenv').config();
-const Server = require('./models/server');
+import dotenv from 'dotenv';
+dotenv.config();
+import Server from './models/server.js';
+
+
 
 //Variable administrador definida temporamente
 global.ADMINISTRADOR = true;

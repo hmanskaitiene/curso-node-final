@@ -4,6 +4,13 @@ Proyecto ecommerce backend
 
 Para realizar pruebas locales se puede importar este [archivo](./postman_collection.json)  en Postman y ver los endpoints disponibles.
 
+Para empezar a utilizar completar las variables de entorno.
+
+En el caso de SQLite o MariaDB para crear db hay que ejecutar: 
+```
+npm run build
+```
+
 # Endpoints
 
 Productos
@@ -20,5 +27,4 @@ Carrito
 - Obtener producto/s del carrito `GET /api/carrito/:id/productos` 
 - Agregar producto/s al carrito `POST /api/carrito/:id/productos` 
 - Eliminar producto del carrito `DELETE /api/carrito/:id/productos/:id_prod` 
-
 

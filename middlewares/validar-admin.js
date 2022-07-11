@@ -1,4 +1,4 @@
-const { response } = require('express')
+import { response } from 'express'
 
 
 const esAdmin = ( req, res = response, next ) => {
@@ -14,6 +14,6 @@ const esAdmin = ( req, res = response, next ) => {
     next();
 }
 
-module.exports = {
+export {
     esAdmin
 }

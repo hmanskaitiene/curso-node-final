@@ -1,12 +1,13 @@
-const { Router } = require('express');
-const { 
+import { Router } from 'express';
+
+import { 
     getProducts,
     addProducts,
     updateProduct,
     deleteProduct,
- } = require('../controllers/productos');
+ }  from '../controllers/productos.js';
 
-const { esAdmin } = require('../middlewares/validar-admin');
+import { esAdmin } from '../middlewares/validar-admin.js';
 
 const router = Router();
 
@@ -16,4 +17,4 @@ router.put('/:id',esAdmin,updateProduct)
 router.delete('/:id',esAdmin,deleteProduct)
 
 
-module.exports = router;
+export default router;
