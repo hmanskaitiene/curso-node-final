@@ -36,21 +36,5 @@ ProductoSchema.methods.toJSON = function(){
   data.id = _id;
   return data;
 }
-/*
-https://stackoverflow.com/questions/28357965/mongoose-auto-increment
-
-ProductoSchema.pre('save', async function() {
-    if(this.number) {
-      let counterDoc = await counterCollection.findOne()
-      if(!counterDoc) {
-        counterDoc = new counterCollection({number: 1})
-      } else {
-        counterDoc.number++
-      }
-      this.number = counterDoc.number
-      const response = await counterDoc.save()
-    }
-  })
-*/
 
 export default mongoose.model('Producto',ProductoSchema);
