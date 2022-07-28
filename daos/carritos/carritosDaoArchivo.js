@@ -1,5 +1,5 @@
 import {Producto} from '../../daos/index.js';
-import {ContenedorArchivo} from '../../contenedores/index.js';
+import {ContenedorArchivo} from '../../containers/index.js';
 import {store_file} from "../../config/db.js";
 
 

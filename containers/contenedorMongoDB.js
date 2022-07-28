@@ -5,12 +5,13 @@ class ContenedorMongoDB {
         this.model = model;
     }
 
-    async getById(id) {
+    async getById(id, lean = false) {
         try{
             if (!mongoose.Types.ObjectId.isValid(id)) return null;
             
-            const item = await this.model.findById(id);
-            return item;
+            if (!lean) return await this.model.findById(id);
+
+            return await this.model.findById(id).lean().exec()
         }
         catch(error){
             return `Hubo un error "${error}"`

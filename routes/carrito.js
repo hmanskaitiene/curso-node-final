@@ -5,6 +5,7 @@ import {
     getProductsCart,
     addProductsCart,
     deleteProductCart,
+    finishOrder,
  } from '../controllers/carrito.js';
 
 const router = Router();
@@ -14,5 +15,6 @@ router.delete('/:id',deleteCart)
 router.get('/:id/productos',getProductsCart)
 router.post('/:id/productos',addProductsCart)
 router.delete('/:id/productos/:id_prod',deleteProductCart)
+router.put('/:idCart/usuario/:idUser',finishOrder)
 
 export default router;

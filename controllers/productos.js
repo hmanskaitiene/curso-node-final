@@ -1,4 +1,4 @@
-import {Producto}  from '../daos/index.js';
+import { Producto }  from '../daos/index.js';
 
 const product= new Producto();
 
@@ -10,7 +10,9 @@ const getProducts = async(req, res) => {
         if (producto !== null){
             res.status(200).json(producto);
         } else {
-            res.status(400).json({error:'producto no encontrado'});
+            const error = `producto no encontrado`;
+            req.app.get('logger').error(error);
+            res.status(400).json({error});
         }
     } else {
         const productos = await product.getAll();        
@@ -32,20 +34,22 @@ const updateProduct = async(req, res) => {
         await product.updateById(id, req.body);
         res.status(200).json({mensaje: `Se ha actualizado el producto ${id}`});
     } else {
-        res.status(400).json({error:'producto no encontrado'});
+        const error = `producto no encontrado`;
+        req.app.get('logger').error(error);
+        res.status(400).json({error});
     }
 }
 
 const deleteProduct = async (req, res) => {
-
     const id = req.params.id;
     const producto = await product.getById(id);
     if (producto !== null) {
-        console.log(id);
         await product.deleteById(id)
         res.status(200).json({mensaje: `Se ha eliminado el producto ${id}`});
     } else {
-        res.status(400).json({error:'producto no encontrado'});
+        const error = `producto no encontrado`;
+        req.app.get('logger').error(error);
+        res.status(400).json({error});
     }
 }
 export {

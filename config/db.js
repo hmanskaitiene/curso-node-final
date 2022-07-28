@@ -70,14 +70,16 @@ if (process.env.ENGINE == 'FIREBASE'){
 if (process.env.ENGINE == 'MEMORIA'){
     store_memoria = {
         productos_memoria:[],
-        carritos_memoria:[]
+        carritos_memoria:[],
+        usuarios_memoria:[]
     }
 }
 
 if (process.env.ENGINE == 'FILE'){
     store_file = {
         productos_file : process.env.FILENAME_PRODUCTOS || 'productos.json',
-        carritos_file : process.env.FILENAME_CARRITOS || 'carritos.json'
+        carritos_file : process.env.FILENAME_CARRITOS || 'carritos.json',
+        usuarios_file : process.env.FILENAME_USUARIOS || 'usuarios.json'
     }
 }
 

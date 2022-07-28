@@ -1,4 +1,4 @@
-import { ContenedorFirebase } from '../../contenedores/index.js';
+import { ContenedorFirebase } from '../../containers/index.js';
 import ProductosDaoFirebase from '../productos/productosDaoFirebase.js';
 
 class CarritosDaoFirebase extends ContenedorFirebase {

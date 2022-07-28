@@ -1,4 +1,4 @@
-import { ContenedorDB } from '../../contenedores/index.js';
+import { ContenedorDB } from '../../containers/index.js';
 
 class CarritosDaoSQLite extends ContenedorDB {
     constructor() {

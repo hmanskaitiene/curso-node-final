@@ -1,5 +1,10 @@
-import {Carrito}  from '../daos/index.js';
+import { Carrito }  from '../daos/index.js';
+import { Usuario }  from '../daos/index.js';
+import { enviarMailAdministrador } from '../utils/mailer.js';
+import { sendMessage } from '../utils/messenger.js';
+
 const cart= new Carrito();
+const usuario= new Usuario();
 
 const addCart = async(req, res) => {
     const id = await cart.save()
@@ -13,7 +18,9 @@ const deleteCart = async (req, res) => {
         await cart.deleteById(id)
         res.status(200).json({mensaje: `Se ha eliminado el carrito ${id}`});
     } else {
-        res.status(400).json({error:'carrito no encontrado'});
+        const error = `carrito no encontrado`;
+        req.app.get('logger').error(error);
+        res.status(400).json({error});
     }
 }
 
@@ -25,10 +32,13 @@ const getProductsCart = async (req, res) => {
             const productos = await cart.getProductsCart(id);
             res.status(200).json(productos);
         } else {
-            res.status(400).json({error:'carrito no encontrado'});
+            const error = `carrito no encontrado`;
+            req.app.get('logger').error(error);
+            res.status(400).json({error});
         }
     } catch (error) {
-        console.log(error);
+        req.app.get('logger').error(error);
+        res.status(400).json({error});
     }
 
 }
@@ -42,10 +52,13 @@ const addProductsCart = async (req, res) => {
             await cart.addProductsCart(productos, id);
             res.status(200).json({mensaje: `Productos agregados al carrito: ${id}`});
         } else {
-            res.status(400).json({error:'carrito no encontrado'});
+            const error = `carrito no encontrado`;
+            req.app.get('logger').error(error);
+            res.status(400).json({error});
         }
     } catch (error) {
-        console.log(error);
+        req.app.get('logger').error(error);
+        res.status(400).json({error});
     }
 
 }
@@ -58,7 +71,32 @@ const deleteProductCart = async (req, res) => {
         await cart.deleteProductCart(id_prod, id);
         res.status(200).json({mensaje: `Se ha eliminado el producto ${id_prod} del carrito: ${id}`});
     } else {
-        res.status(400).json({error:'carrito no encontrado'});
+        const error = `carrito no encontrado`;
+        req.app.get('logger').error(error);
+        res.status(400).json({error});
+    }
+}
+
+const finishOrder = async (req, res) => {
+    try {
+        const idCart = req.params.idCart;
+        const idUser = req.params.idUser;
+        const user = await usuario.getById(idUser);
+        const productos = await cart.getProductsCart(idCart);
+        const msg = `Gracias ${user.nombre}, hemos recibido su pedido y se encuentra en proceso de preparación. Próximamente recibirá novedades en su email.`
+        const subject = `Nuevo pedido de ${user.nombre} (${user.email})`
+    
+        //Envío de SMS
+        await sendMessage(user.telefono, msg)
+        //Envío de Whatsapp
+        await sendMessage(user.telefono, subject, true)
+        //Envío de mail
+        await enviarMailAdministrador('nuevoPedido', subject, {user,productos});
+    
+        res.status(200).json({mensaje: `Se ha finalizado el carrito ${idCart} del usuario: ${idUser}`});        
+    } catch (error) {
+        req.app.get('logger').error(error);
+        res.status(400).json({error});        
     }
 }
 
@@ -68,4 +106,5 @@ export {
     getProductsCart,
     addProductsCart,
     deleteProductCart,
+    finishOrder,
 }

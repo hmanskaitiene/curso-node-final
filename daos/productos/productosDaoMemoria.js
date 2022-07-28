@@ -1,4 +1,4 @@
-import {ContenedorMemoria} from '../../contenedores/index.js';
+import {ContenedorMemoria} from '../../containers/index.js';
 import {store_memoria} from "../../config/db.js";
 
 class ProductosDaoMemoria extends ContenedorMemoria {

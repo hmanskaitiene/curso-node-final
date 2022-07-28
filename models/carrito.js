@@ -7,9 +7,16 @@ const CarritoSchema = new mongoose.Schema({
         required: false,
     },
     productos : [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Producto'
-    }]
+        producto: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Producto'
+        },
+        cantidad: {
+            type: Number,
+            required: true
+        }
+    }
+    ]
 });
 
 CarritoSchema.methods.toJSON = function(){

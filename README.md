@@ -2,14 +2,22 @@
 
 Proyecto ecommerce backend
 
+1 - Instalar las dependecias.
+```
+npm install
+```
+2 - Definir las variables de entorno en el .env de acuerdo al .env.sample
+
+3 - Crear la estructura de db local en caso de sqlite/mysql
+```
+npm run create-db
+```
+4 - Arrancar server modo desarrollo
+```
+npm run dev -- -p NUMERO_DE_PUERTO
+```
+
 Para realizar pruebas locales se puede importar este [archivo](./postman_collection.json)  en Postman y ver los endpoints disponibles.
-
-Para empezar a utilizar completar las variables de entorno.
-
-En el caso de SQLite o MariaDB para crear db hay que ejecutar: 
-```
-npm run build
-```
 
 # Endpoints
 

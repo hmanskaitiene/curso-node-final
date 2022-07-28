@@ -15,47 +15,55 @@ import ProductosDaoSQLite from './productos/productosDaoSQLite.js';
 import ProductosDaoMongoDB from './productos/productosDaoMongoDB.js';
 import ProductosDaoFirebase from './productos/productosDaoFirebase.js';
 
-let productoSelected;
-let carritoSelected;
+import UsuariosDaoArchivo from './usuarios/usuariosDaoArchivo.js';
+import UsuariosDaoMemoria from './usuarios/usuariosDaoMemoria.js';
+import UsuariosDaoMariaDB from './usuarios/usuariosDaoMariaDB.js';
+import UsuariosDaoSQLite from './usuarios/usuariosDaoSQLite.js';
+import UsuariosDaoMongoDB from './usuarios/usuariosDaoMongoDB.js';
+import UsuariosDaoFirebase from './usuarios/usuariosDaoFirebase.js';
+
+let productoSelected,carritoSelected,usuarioSelected;
+
 
 if (process.env.ENGINE == 'MONGODB'){
-    console.log('MongoDB elegido');
     productoSelected = ProductosDaoMongoDB;
     carritoSelected = CarritosDaoMongoDB;
+    usuarioSelected = UsuariosDaoMongoDB;
 }
 
 if (process.env.ENGINE == 'SQLITE'){
-    console.log('Sqlite elegido');
     productoSelected = ProductosDaoSQLite;
     carritoSelected = CarritosDaoSQLite;
+    usuarioSelected = UsuariosDaoSQLite;
 }
 
 if (process.env.ENGINE == 'MARIADB'){
-    console.log('MariaDB elegido');
     productoSelected = ProductosDaoMariaDB;
     carritoSelected = CarritosDaoMariaDB;
+    usuarioSelected = UsuariosDaoMariaDB;
 }
 
 if (process.env.ENGINE == 'FILE'){
-    console.log('File elegido');
     productoSelected = ProductosDaoArchivo;
     carritoSelected = CarritosDaoArchivo;
+    usuarioSelected = UsuariosDaoArchivo;
 }
 
 if (process.env.ENGINE == 'FIREBASE'){
-    console.log('Firebase elegido');
     productoSelected = ProductosDaoFirebase;
     carritoSelected = CarritosDaoFirebase;
+    usuarioSelected = UsuariosDaoFirebase;
 }
 
 if (process.env.ENGINE == 'MEMORIA'){
-    console.log('Memoria elegido');
     productoSelected = ProductosDaoMemoria;
     carritoSelected = CarritosDaoMemoria;
+    usuarioSelected = UsuariosDaoMemoria;
 }
 
 
 export {
     productoSelected as Producto,
     carritoSelected as Carrito,
+    usuarioSelected as Usuario,
 }
