@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import mongoose from 'mongoose'
-import Knex from "Knex";
+import knex from "knex";
 import {initializeApp,applicationDefault} from 'firebase-admin/app';
 import {getFirestore} from 'firebase-admin/firestore';
 
@@ -32,12 +32,12 @@ const options_mariadb = {
 }
 
 if (process.env.ENGINE == 'MARIADB'){
-    knexConnection = Knex(options_mariadb)
+    knexConnection = knex(options_mariadb)
     knexConnectionOptions = options_mariadb
 }
 
 if (process.env.ENGINE == 'SQLITE'){
-    knexConnection = Knex(options_sqlite)
+    knexConnection = knex(options_sqlite)
     knexConnectionOptions = options_sqlite
 }
 
