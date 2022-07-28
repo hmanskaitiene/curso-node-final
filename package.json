@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "create-db": "node build_db.js"
+    "create-db": "node build.js"
   },
   "keywords": [],
   "author": "",
