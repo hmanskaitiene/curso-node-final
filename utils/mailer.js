@@ -3,6 +3,7 @@ import Handlebars from 'handlebars';
 import path from 'path';
 import {fileURLToPath} from 'url';
 import { promises as fs } from 'fs';
+import logger from '../utils/logger.js';
 
 const transporter = createTransport({
     host: process.env.SMTP_HOST,
@@ -22,7 +23,7 @@ const enviarMail = async (to,subject,html) => {
         }
         await transporter.sendMail(mailOptions)
      } catch (error) {
-        console.log(error)
+        logger.error(error.message)
      }
 }
 
@@ -50,7 +51,7 @@ const enviarMailAdministrador = async(type, subject, data) => {
 
         await enviarMail(process.env.ADMIN_EMAIL, subject, htmlMessage);            
     } catch (error) {
-        console.error(error.message);
+        logger.error(error.message)
     }
 }
 

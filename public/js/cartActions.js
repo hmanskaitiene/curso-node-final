@@ -18,6 +18,7 @@ const agregarProducto = (button, id, rebuildView = false) => {
     const cartId = localStorage.getItem('cartId');
 
     button.innerHTML = buttonAddContentLoading;
+    button.disabled = true;
     fetch(`/api/carrito/${cartId}/productos`, {
         method: "POST",
         body: JSON.stringify([{id}]),
@@ -30,6 +31,7 @@ const agregarProducto = (button, id, rebuildView = false) => {
     .then(response => response.json())
     .then((productosCarrito) => {
         button.innerHTML = buttonAddContentComplete;
+        button.disabled = false;
         document.querySelector('#badgeCantProductos').innerHTML = productosCarrito.length;
         if (rebuildView) generarViewCarrito(productosCarrito);
         renderToasty('success', 'Se ha agregado el producto al carrito','top','left');
@@ -39,6 +41,7 @@ const agregarProducto = (button, id, rebuildView = false) => {
 const eliminarProducto = (button, id) => {
     const cartId = localStorage.getItem('cartId');
 
+    button.disabled = true;
     button.innerHTML = buttonDeleteContentLoading;
     fetch(`/api/carrito/${cartId}/productos/${id}`, {method: "DELETE"})
     .then(response => response.json())
@@ -48,6 +51,7 @@ const eliminarProducto = (button, id) => {
     .then(response => response.json())
     .then((productosCarrito) => {
         button.innerHTML = buttonDeleteContentComplete;
+        button.disabled = false;
         generarViewCarrito(productosCarrito);
         renderToasty('success', 'Se ha eliminado el producto');
     })

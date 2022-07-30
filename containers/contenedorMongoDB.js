@@ -28,6 +28,14 @@ class ContenedorMongoDB {
         }
     }
 
+    async searchBy(searchField, criteria) {
+        try{
+            return await this.model.findOne({searchField:criteria})
+        }
+        catch(error){
+            return `Hubo un error "${error}"`
+        }
+    }
     async saveContent(item) {
         try{
             const id = await this.model.create(item);

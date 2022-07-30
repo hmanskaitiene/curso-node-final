@@ -1,4 +1,5 @@
 import twilio from 'twilio'
+import logger from '../utils/logger.js';
 
 const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
 
@@ -14,7 +15,7 @@ const sendMessage = async (receiver, body, wa = false) => {
         } 
         const msg = await client.messages.create({from,to,body});
      } catch (error) {
-        console.log(error)
+        logger.error(error.message)
      }
 }
 

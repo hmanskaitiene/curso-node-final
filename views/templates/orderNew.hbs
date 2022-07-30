@@ -7,7 +7,7 @@
         <td>Código</td>
         <td>Producto</td>
         <td>Precio</td>
-        <td>Cantidad</td>
+        <td >Cantidad</td>
         <td>Total</td>
     </tr>
 
@@ -15,10 +15,10 @@
     <tr>
         <td>{{ this.codigo }}</td>
         <td>{{ this.nombre }}</td>
-        <td>{{ this.precio }}</td>
-        <td>{{ this.cantidad }}</td>
-        <td>{{ this.total }}</td>
+        <td align="right">{{ this.precio }}</td>
+        <td align="right">{{ this.cantidad }}</td>
+        <td align="right">{{ this.total }}</td>
     </tr>
 {{/each}}    
 </table>
-<h5><strong>Total:</strong> {{totalCarrito}}</h5>
+<h5><strong>Total:</strong>$ {{totalCarrito}}</h5>

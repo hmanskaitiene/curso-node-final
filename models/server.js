@@ -98,8 +98,8 @@ class Server {
             const descripcion = `ruta ${path} método ${metodo} no implementada`
             this.logger.warn(descripcion)
             res.status(401).json({
-                    error: -2,
-                    descripcion
+                error: -2,
+                descripcion
             });
         });
     }
