@@ -17,7 +17,7 @@ const initializePassport = () => {
             async (req, username, password, done) => {
                 try {
                     let user = await User.findOne({ email:username })
-                    if (user) return done(null, false)
+                    if (user) return done(null, false, { message: 'El correo electronico ya está registrado' })
 
                     const newUser = {
                         nombre: req.body.nombre,
@@ -52,8 +52,8 @@ const initializePassport = () => {
             async (username,password,done) => {
                  try {
                     let user = await User.findOne({ email:username});
-                    if (!user) return done(null, false,{message:'No existe'})
-                    if (!isValidPassword(user,password)) return done(null, false,{message:'Invalid password'})
+                    if (!user) return done(null, false,{message:'Usuario o credenciales inválidas'})
+                    if (!isValidPassword(user,password)) return done(null, false,{message:'Usuario o credenciales inválidas'})
 
                     return done(null, user)
                 } catch (error) {

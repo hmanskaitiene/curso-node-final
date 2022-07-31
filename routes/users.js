@@ -7,6 +7,7 @@ const router = Router();
 router.post('/login', 
     passport.authenticate('login', {failureRedirect:'/api/usuarios/fLogin'}), 
     userController.loginPost)
+    
 router.post('/signup', 
     passport.authenticate('register', {failureRedirect:'/api/usuarios/fRegister'}), 
     userController.signupPost)

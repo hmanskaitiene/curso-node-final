@@ -1,7 +1,3 @@
-import User from "../models/user.js"; 
-import cloudinary from 'cloudinary'
-cloudinary.config(process.env.CLOUDINARY_URL);
-
 const login = (req, res) => {
     if (req.user) res.redirect('/dashboard'); 
 

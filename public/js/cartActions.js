@@ -1,11 +1,12 @@
 
 const generarCarrito = async () => {
-    let cartId = localStorage.getItem('cartId');
+    let userId = sessionStorage.getItem('userId');
+    let cartId = localStorage.getItem(`cartId_${userId}`);
 
     if (cartId === null) {
         const response = await fetch("/api/carrito",{method: "POST"});
         const {id} = await response.json();
-        localStorage.setItem('cartId',id)
+        localStorage.setItem(`cartId_${userId}`,id)
         cartId = id;
     }
 
@@ -15,7 +16,8 @@ const generarCarrito = async () => {
 }
 
 const agregarProducto = (button, id, rebuildView = false) => {
-    const cartId = localStorage.getItem('cartId');
+    let userId = sessionStorage.getItem('userId');
+    let cartId = localStorage.getItem(`cartId_${userId}`);
 
     button.innerHTML = buttonAddContentLoading;
     button.disabled = true;
@@ -39,7 +41,8 @@ const agregarProducto = (button, id, rebuildView = false) => {
 }
 
 const eliminarProducto = (button, id) => {
-    const cartId = localStorage.getItem('cartId');
+    let userId = sessionStorage.getItem('userId');
+    let cartId = localStorage.getItem(`cartId_${userId}`);
 
     button.disabled = true;
     button.innerHTML = buttonDeleteContentLoading;
@@ -58,8 +61,8 @@ const eliminarProducto = (button, id) => {
 }
 
 const finalizarCompra =  (button) => {
-    const cartId = localStorage.getItem('cartId');
-    const userId = sessionStorage.getItem('userId');
+    let userId = sessionStorage.getItem('userId');
+    let cartId = localStorage.getItem(`cartId_${userId}`);
     // Por el momento se borra el carrito....no se si sera asi
     button.innerHTML = buttonOrderContentLoading
     button.disabled = true;
@@ -70,7 +73,7 @@ const finalizarCompra =  (button) => {
     })
     .then(response => response.json())
     .then(()=> {
-        localStorage.removeItem('cartId');
+        localStorage.removeItem(`cartId_${userId}`);
         button.innerHTML = buttonOrderContentComplete;
         return Swal.fire(
             'Compra realizada',

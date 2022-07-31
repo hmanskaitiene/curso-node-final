@@ -77,7 +77,7 @@ signupForm.addEventListener('submit', function (e) {
         .then(response => response.json())
         .then(info => {
             if (info.registered === true){
-                sessionStorage.setItem('userId',info.userId);
+                sessionStorage.setItem('userInfo',{userId:info.userId});
                 let formData = new FormData();
                 const profile = document.getElementById('profileImage');
                 formData.append("profileImage", profile.files[0]);
@@ -88,7 +88,7 @@ signupForm.addEventListener('submit', function (e) {
             } else {
                 btnSignup.innerHTML = buttonContentComplete;
                 btnSignup.disabled = false;
-                renderToasty('error', 'No se pudo registrar el usuario');
+                renderToasty('error', 'El correo electrónico ya está registrado. Utilice otro que tenga disponible.');
             }
         })
         .then(response => response.json())

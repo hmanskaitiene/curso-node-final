@@ -1,4 +1,9 @@
+import cloudinary from 'cloudinary'
 import { enviarMailAdministrador } from '../utils/mailer.js';
+import User from "../models/user.js"; 
+
+cloudinary.config(process.env.CLOUDINARY_URL);
+
 
 const loginPost = (req, res) => {
     res.status(200).json({
@@ -27,7 +32,7 @@ const loginError = (req, res) => {
 
 const signupError = (req, res) => {
     res.status(400).json({
-        message:'No se pudo registrar el usuario',
+        message:'No se pudo registrar el usuario.<br> Intente utilizando otro correo electrónico',
         registered: false
     })
 }
@@ -47,21 +52,19 @@ const failSignupDisplay = (req, res) => {
 }
 
 const userUpdate = async (req, res) => {
-    let user = await User.findOneAndUpdate({ _id: req.user.id },req.body);
-    let message,updated;
-
-    if (user) {
-        message = 'Usuario actualizado';
-        updated = true;
-    } else {
-        message = 'No se pudo actualizar el usuario';
-        updated = false;
+    try {
+        await User.findOneAndUpdate({ _id: req.user.id },req.body);
+        res.status(200).json({
+            message:'Se han actualizado con éxito las modificaciones.',
+            updated:true
+        })
+            
+    } catch (error) {
+        res.status(200).json({
+            message : error.code == 11000 ? 'El correo ya se encuentra registrado.':'No se pudieron actualizar los datos.',
+            updated : false
+        })        
     }
-
-    res.status(200).json({
-        message,
-        updated
-    })
 }
 
 const userImageUpload = async (req, res) => {

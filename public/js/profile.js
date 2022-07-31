@@ -10,10 +10,10 @@ const profileForm = document.getElementById('profileForm')
 const profileImageForm = document.getElementById('profileImageForm')
 
 const buttonFormContentCompleted = `Guardar`;
-const buttonFormContentLoading = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>${buttonFormContentCompleted}`;
+const buttonFormContentLoading = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ${buttonFormContentCompleted}`;
 
 const buttonImageContentCompleted = `Actualizar imagen`;
-const buttonImageContentLoading = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>${buttonImageContentCompleted}`;
+const buttonImageContentLoading = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ${buttonImageContentCompleted}`;
 
 const btnProfile = document.querySelector('#btnProfile');
 const btnProfileImage = document.querySelector('#btnProfileImage');
@@ -66,18 +66,20 @@ profileForm.addEventListener('submit', function (e) {
         }
 
         btnProfile.innerHTML = buttonFormContentLoading
-        fetch('/userUpdate', {
+        btnProfile.disabled = true;
+        fetch('/api/usuarios/userUpdate', {
             method: "POST",
             body: JSON.stringify(data),
             headers: {"Content-type": "application/json; charset=UTF-8"}
         })
         .then(response => response.json())
         .then(info => {
+            btnProfile.innerHTML = buttonFormContentCompleted
+            btnProfile.disabled = false;
             if (info.updated === true){
-                btnProfile.innerHTML = buttonFormContentCompleted
                 renderToasty('success', 'Se han actualizado con éxito los cambios');
             } else {
-                renderToasty('error', 'No se pudieron actualizar los campos');
+                renderToasty('error', 'No se pudieron actualizar los campos. El correo electrónico ya está registrado.');
             }
         });
     }
@@ -97,21 +99,23 @@ profileImageForm.addEventListener('submit', function (e) {
 
     if (form_validation){
         btnProfileImage.innerHTML = buttonImageContentLoading
+        btnProfileImage.disabled = true;
         let formData = new FormData(profileImageForm);
 
-        return fetch('/userImageUpload', {
+        return fetch('/api/usuarios/userImageUpload', {
             method: 'POST',
             body: formData
         })
         .then(response => response.json())
         .then(imageProfile => {
+            btnProfileImage.innerHTML = buttonImageContentCompleted
+            btnProfileImage.disabled = false;
             if (imageProfile.uploaded === true){
-                btnProfileImage.innerHTML = buttonImageContentCompleted
                 renderToasty('success', 'Se actualizo la imagen');
                 document.querySelector('#profileImageDisplay').src= imageProfile.imgUrl;
                 document.querySelector('#menuImageDisplay').src= imageProfile.imgUrl;
             } else {
-                renderToasty('error', 'No se pudo registrar el usuario');
+                renderToasty('error', 'No se pudo actualizar la imagen');
             }
         });
     }
