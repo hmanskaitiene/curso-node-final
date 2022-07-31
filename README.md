@@ -46,7 +46,7 @@ Usuarios
 
 # Notificaciones
 
-Las notificaciones de los nuevos usuarios y pedidos se realizan mediantes email, whatsapp y sms utilizando Twilio.
+Las notificaciones de los nuevos usuarios y pedidos se realizan mediante email, whatsapp y sms utilizando Twilio.
 
 #### Nuevo registro de usuario:
 
