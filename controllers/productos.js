@@ -52,7 +52,7 @@ const deleteProduct = async (req, res) => {
         res.status(400).json({error});
     }
 }
-export {
+export default {
     getProducts,
     addProducts,
     updateProduct,

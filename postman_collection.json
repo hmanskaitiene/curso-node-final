@@ -193,6 +193,28 @@
 			"response": []
 		},
 		{
+			"name": "finishOrder",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/carrito/1/usuario/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"carrito",
+						"1",
+						"usuario",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "deleteProductCart",
 			"request": {
 				"method": "DELETE",
@@ -227,6 +249,64 @@
 					"port": "8080",
 					"path": [
 						"ruta_no_existente"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "loginUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"prueba@mail.com\",\r\n    \"passwd\":\"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/usuarios/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"usuarios",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Usuario de prueba\",\r\n    \"email\": \"prueba@mail.com\",\r\n    \"passwd\": \"123\", \r\n    \"direccion\": \"Casa 123\",\r\n    \"edad\": \"30\",\r\n    \"telefono\": \"+5401151231234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/usuarios/signup",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"usuarios",
+						"signup"
 					]
 				}
 			},

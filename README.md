@@ -2,6 +2,8 @@
 
 Proyecto ecommerce backend
 
+Link a Heroku [aquí](https://coderhouse-node-final.herokuapp.com)
+
 1 - Instalar las dependecias.
 ```
 npm install
@@ -35,4 +37,25 @@ Carrito
 - Obtener producto/s del carrito `GET /api/carrito/:id/productos` 
 - Agregar producto/s al carrito `POST /api/carrito/:id/productos` 
 - Eliminar producto del carrito `DELETE /api/carrito/:id/productos/:id_prod` 
+
+Usuarios
+
+- Crear usuario `POST /api/usuarios/signup`
+- Login usuario `POST /api/usuarios/login`
+
+# Endpoints
+
+Las imágenes de los perfiles de usuarios se suben utilizando el Cloudinary
+
+Las notificaciones de los nuevos usuarios y pedidos se realizan mediantes email, whatsapp y sms utilizando Twilio.
+
+#### Nuevo registro de usuario:
+
+![Nuevo registro por email](./docs/email_notification.png "Notificación Nuevo registro")
+
+#### Nuevo pedido:
+
+![Nuevo pedido por email](./docs/email_order_notification.png "Notificación Nuevo pedido por email")
+![Nuevo pedido por sms](./docs/sms_notification.png "Notificación Nuevo pedido por sms")
+![Nuevo pedido por whatsapp](./docs/wa_notification.png "Notificación Nuevo pedido por whatsapp")
 

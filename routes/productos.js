@@ -1,20 +1,13 @@
 import { Router } from 'express';
-
-import { 
-    getProducts,
-    addProducts,
-    updateProduct,
-    deleteProduct,
- }  from '../controllers/productos.js';
-
+import productsController from '../controllers/productos.js';
 import { esAdmin } from '../middlewares/validar-admin.js';
 
 const router = Router();
 
-router.get('/:id?',getProducts)
-router.post('/',esAdmin ,addProducts)
-router.put('/:id',esAdmin,updateProduct)
-router.delete('/:id',esAdmin,deleteProduct)
+router.get('/:id?',productsController.getProducts)
+router.post('/',esAdmin ,productsController.addProducts)
+router.put('/:id',esAdmin,productsController.updateProduct)
+router.delete('/:id',esAdmin,productsController.deleteProduct)
 
 
 export default router;

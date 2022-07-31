@@ -1,4 +1,8 @@
-const loginForm = document.getElementById('loginForm')
+const loginForm = document.querySelector('#loginForm')
+const btnLogin = document.querySelector('#btnLogin');
+const buttonLoginContentComplete = 'Ingresar'
+const buttonLoginContentLoading = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ${buttonLoginContentComplete}`;
+
 loginForm.addEventListener('submit', function (e) {
     e.preventDefault();
     cleanErrors();
@@ -18,13 +22,15 @@ loginForm.addEventListener('submit', function (e) {
     }
 
     if (form_validation){
+        btnLogin.innerHTML = buttonLoginContentLoading
+        btnLogin.disabled = true;
         let formdata = new FormData(loginForm)
         let data = {
             email: formdata.get('email'),
             passwd: formdata.get('passwd'), 
         }
 
-        fetch('/login', {
+        fetch('/api/usuarios/login', {
             method: "POST",
             body: JSON.stringify(data),
             headers: {"Content-type": "application/json; charset=UTF-8"}
@@ -35,6 +41,9 @@ loginForm.addEventListener('submit', function (e) {
                 sessionStorage.setItem('userId',info.userId);
                 location.replace('/dashboard')
             } else {
+                btnLogin.innerHTML = buttonLoginContentComplete
+                btnLogin.disabled = false;
+    
                 renderToasty('error', 'Usuario o contraseña invalidos');
             }
         });

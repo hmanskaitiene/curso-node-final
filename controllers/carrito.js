@@ -83,11 +83,12 @@ const finishOrder = async (req, res) => {
         const idUser = req.params.idUser;
         const user = await usuario.getById(idUser);
         const productos = await cart.getProductsCart(idCart);
-        const msg = `Gracias ${user.nombre}, hemos recibido su pedido y se encuentra en proceso de preparación. Próximamente recibirá novedades en su email.`
+
+        const smsMsg = `Gracias ${user.nombre}, hemos recibido su pedido y se encuentra en proceso de preparación. Próximamente recibirá novedades en su email.`
         const subject = `Nuevo pedido de ${user.nombre} (${user.email})`
     
         //Envío de SMS
-        await sendMessage(user.telefono, msg)
+        await sendMessage(user.telefono, smsMsg)
         //Envío de Whatsapp
         await sendMessage(user.telefono, subject, true)
         //Envío de mail
@@ -100,7 +101,7 @@ const finishOrder = async (req, res) => {
     }
 }
 
-export {
+export default {
     addCart,
     deleteCart,
     getProductsCart,

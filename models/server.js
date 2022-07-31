@@ -1,25 +1,24 @@
-import express from 'express';
-import handlebars from 'express-handlebars';
-const {engine} = handlebars;
-import path from'path';
-import {fileURLToPath} from 'url';
-import passport from 'passport';
-import http from "http";
-import fileUpload from 'express-fileupload';
-import cookieParser from 'cookie-parser';
 import cluster from 'cluster';
+import cookieParser from 'cookie-parser';
 import core from 'os';
+import express from 'express';
+import fileUpload from 'express-fileupload';
+import handlebars from 'express-handlebars';
+import http from "http";
+const { engine } = handlebars;
+import path from'path';
+import { fileURLToPath } from 'url';
+import passport from 'passport';
 
-import routerProductos from "../routes/productos.js"
 import routerCarrito from "../routes/carrito.js"
-import routerAuth from "../routes/auth.js"
+import routerProductos from "../routes/productos.js"
 import routerShop from "../routes/shop.js"
+import routerUsers from "../routes/users.js"
 
-import { mongoConnection } from '../config/db.js';
 import { baseSession } from '../config/session.js';
 import { initializePassport } from '../config/passport.config.js';
-import { sessionChecker } from '../middlewares/session-checker.js';
 import logger from '../utils/logger.js'
+import { mongoConnection } from '../config/db.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -36,7 +35,7 @@ class Server {
         this.paths = {
             productos: '/api/productos',
             carrito:   '/api/carrito',
-            auth:      '/',
+            users:     '/api/usuarios',
             shop:      '/',
         }
 
@@ -86,10 +85,10 @@ class Server {
     }
 
     routes() {
-        this.app.use( this.paths.auth, routerAuth );
+        this.app.use( this.paths.users, routerUsers );
         this.app.use( this.paths.productos, routerProductos);
         this.app.use( this.paths.carrito, routerCarrito );
-        this.app.use( this.paths.shop,sessionChecker, routerShop );
+        this.app.use( this.paths.shop, routerShop );
 
 
         this.app.use('*', (req, res) => {
