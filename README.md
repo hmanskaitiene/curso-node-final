@@ -43,9 +43,8 @@ Usuarios
 - Crear usuario `POST /api/usuarios/signup`
 - Login usuario `POST /api/usuarios/login`
 
-# Endpoints
 
-Las imágenes de los perfiles de usuarios se suben utilizando el Cloudinary
+# Notificaciones
 
 Las notificaciones de los nuevos usuarios y pedidos se realizan mediantes email, whatsapp y sms utilizando Twilio.
 
@@ -59,3 +58,6 @@ Las notificaciones de los nuevos usuarios y pedidos se realizan mediantes email,
 ![Nuevo pedido por sms](./docs/sms_notification.png "Notificación Nuevo pedido por sms")
 ![Nuevo pedido por whatsapp](./docs/wa_notification.png "Notificación Nuevo pedido por whatsapp")
 
+---
+\
+Las imágenes de los perfiles de usuarios se suben utilizando el servicio [Cloudinary](https://cloudinary.com)
