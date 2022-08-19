@@ -58,3 +58,10 @@ const getFormattedDate = (timestamp) => {
     let minutes = date.getMinutes().toString().padStart(2, "0");
     return day + "/" + month + "/" + year + " " + hours + ":" + minutes;
 };
+const checkExtension = (filePath) => {
+    const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+    
+    if (!allowedExtensions.exec(filePath)) return false;
+    
+    return true;
+}

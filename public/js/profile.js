@@ -103,8 +103,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (!isRequired(document.getElementById('profileImage').value)) {
                 showError('profileImage', 'Este es un campo requerido');
                 form_validation = false;
+            } else if (!checkExtension(document.getElementById('profileImage').value)) {
+                showError('profileImage', 'Este tipo de archivo no esta permitido. Las extensión debe ser jpg o png');
+                form_validation = false;
             }
-        
+            
+
             if (form_validation){
                 btnProfileImage.innerHTML = buttonImageContentLoading
                 btnProfileImage.disabled = true;

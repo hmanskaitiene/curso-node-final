@@ -32,13 +32,11 @@ class OrderService {
         const subject = `Nuevo pedido de ${user.nombre} (${user.email})`
 
 
-        /*
         //Envío de SMS
         await sendMessage(user.telefono, smsMsg)
         //Envío de Whatsapp
         await sendMessage(user.telefono, subject, true)
         //Envío de mail
-        */
         await enviarMailAdministrador('nuevoPedido', subject, {user,productos});
 
 

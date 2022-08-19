@@ -10,11 +10,7 @@ npm install
 ```
 2 - Definir las variables de entorno en el .env de acuerdo al .env.sample
 
-3 - Crear la estructura de db local en caso de sqlite/mysql
-```
-npm run create-db
-```
-4 - Arrancar server modo desarrollo
+3 - Arrancar server modo desarrollo
 ```
 npm run dev -- -p NUMERO_DE_PUERTO
 ```
@@ -37,11 +33,29 @@ Carrito
 - Obtener producto/s del carrito `GET /api/carrito/:id/productos` 
 - Agregar producto/s al carrito `POST /api/carrito/:id/productos` 
 - Eliminar producto del carrito `DELETE /api/carrito/:id/productos/:id_prod` 
+- Obtener carrito por email `GET /api/carrito/email/:email` 
 
 Usuarios
 
 - Crear usuario `POST /api/usuarios/signup`
 - Login usuario `POST /api/usuarios/login`
+- Actualizar usuario `PUT /api/usuarios/:id`
+- Subir imagen usuario `POST /api/usuarios/:id`
+
+Ordenes
+
+- Crear orden `POST /api/ordenes/:idCart`
+- Obtener ordenes de usuario `GET /api/ordenes/email/:email`
+
+Mensajes
+
+- Crear mensaje `POST /api/mensajes/`
+- Obtener los usuarios que enviaron mensajes `GET /api/mensajes/senders`
+- Obtener los mensajes de un email `GET /api/mensajes/:email`
+
+Información
+
+- Obtener la información del sistema `GET /api/informacion`
 
 
 # Notificaciones

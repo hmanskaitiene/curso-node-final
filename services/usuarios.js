@@ -45,6 +45,7 @@ class UserService {
             }}
     
         } catch (error) {
+            logger.error(error.message);
             return { status:400, data: {error:error.message} }
         }
     }
@@ -53,6 +54,7 @@ class UserService {
         const usuario = await this.usuariosDao.save(userData);
         if (usuario.error) {
             const error = usuario.errorCode == 11000 ? 'El correo ya se encuentra registrado.':'No se pudo registrar el usuario';
+            logger.error(error);
             return { status:400, data: {error} }
         }
 
