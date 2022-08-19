@@ -13,7 +13,7 @@ const sendMessage = async (receiver, body, wa = false) => {
             to = `whatsapp:${config.app.twilioPhoneWapSandbox}`;
         } else {
             from = config.app.twilioPhoneSender;
-            to = config.app.twilioPhoneWapSandbox;
+            to = config.app.twilioPhoneSandbox;
         } 
         const msg = await client.messages.create({from,to,body});
      } catch (error) {
