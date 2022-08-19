@@ -11,13 +11,13 @@
                 <div class="col-md-12 col-xl-10">
                     {{#if (eq this.tipo 'SYSTEM') }}
                         <div class="chat-message darker">
-                        <img class="rounded-circle article-img" src="{{ this.imageProfile }}"  style="width: 40px; height: auto;">
+                        <img class="rounded-circle article-img" src="{{ this.imageProfile }}"  style="width: 40px; height: 40px; object-fit:cover">
                         <p><strong>(Admin)</strong> {{this.mensaje}}</p>
                         <span class="time-right">{{date-human-read this.fecha}}</span>
                         </div>
                     {{else}}
                         <div class="chat-message">
-                        <img class="rounded-circle article-img" src="{{ this.imageProfile }}"  style="width: 40px; height: auto;">
+                        <img class="rounded-circle article-img" src="{{ this.imageProfile }}"  style="width: 40px; height: 40px; object-fit:cover">
                         <p>{{this.mensaje}}</p>
                         <span class="time-right">{{date-human-read this.fecha}}</span>
                         </div>
