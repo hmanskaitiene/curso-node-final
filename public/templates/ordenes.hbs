@@ -1,0 +1,58 @@
+<div class="container">
+    {{#if orders.length}}
+        {{#each orders}}
+            <div class="row justify-content-center mb-3">
+                <div class="col-md-12 col-xl-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <ol class="list-group">
+                                        <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-start">
+                                            <div class="ms-2 me-auto">
+                                                <div class="">
+                                                    Orden # {{ this.numero }}
+                                                </div>
+                                            </div>
+                                            <span class="">{{date-human-read this.timestamp}}</span>
+                                        </li>
+                                        {{#each productos}}
+                                        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+                                            <div class="ms-2 me-auto">
+                                                <div class="">{{ this.nombre }} 
+                                                    <div class="mt-1 mb-0 text-muted small">
+                                                        <span>Precio ${{ decimal this.precio }}</span>
+                                                        <span class="text-primary"> • </span>
+                                                        <span>{{this.cantidad}} unidad/es</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="small">$ {{decimal this.total}}</span>
+                                        </li>
+                                        {{/each}}
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="ms-2 me-auto">
+                                                <div class="fw-bold">Total</div>
+                                            </div>
+                                            <h4><span class="badge bg-primary">$ {{decimal this.total}}</span></h4>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    {{else}}
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-12 col-xl-10">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="alert alert-info" role="alert">No hay compras realizadas aún.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/if}}
+</div>

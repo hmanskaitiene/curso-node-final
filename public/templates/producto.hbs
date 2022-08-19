@@ -1,0 +1,53 @@
+{{#if this.nombre }}
+            <div class="row justify-content-center mb-3">
+                <div class="col-md-12 col-xl-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-5 col-xl-5 mb-4 mb-lg-0">
+                                    <img src="{{this.foto}}" class="w-100  rounded mx-auto d-block" />
+                                </div>
+                                <div class="col-md-6 d-flex flex-wrap col-lg-7 col-xl-7 mb-4 mb-lg-0">
+                                    <div class="col-12">
+                                        <div><h4>{{this.nombre}}</h4></div>
+                                        <hr>
+                                        <div class="row">
+                                        <div class="col-6">
+                                            <div class="mt-1 mb-0 text-muted small">
+                                                <span>Código: {{this.codigo}}</span>
+                                                <span class="text-primary"> • </span>
+                                                <span>Stock: {{this.stock}} unidades</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-end"><h4 class="p-2 mb-1 me-1">$ {{decimal this.precio}}</h4></div>
+                                            <div class="text-end">
+                                                <button class="btn btn-secondary btn-sm add-button" type="button" data-id="{{this.id}}">Agregar al carrito</button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                        <p class="mt-4 mb-4 mb-md-0 small">
+                                            {{this.descripcion}}
+                                        </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    {{else}}
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-12 col-xl-10">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="alert alert-info" role="alert">El producto no existe</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/if}}

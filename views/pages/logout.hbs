@@ -2,13 +2,16 @@
         <div class="col">
             <div class="card text-bg-light">
                 <div class="card-body">
-                    <h4>Hasta luego {{userName}}</h4>
+                    <h4>Hasta luego!</h4>
                 </div>
             </div>
         </div>
     </div>
 
 <script type="text/javascript">
+    sessionStorage.removeItem('userToken');
+    sessionStorage.removeItem('userInfo');
+    sessionStorage.removeItem('cartId');
     setTimeout(function(){
         window.location.replace("./login")
     }, 2000);

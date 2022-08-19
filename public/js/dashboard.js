@@ -7,11 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 const loadInitialData = async () => {
-    const response = await fetch("/api/productos");
+    await generarMenu();
+    const response = await apiQuery("/api/productos")
     const products = await response.json();
+
     generarViewDashboard(products);
     const productosCarrito = await generarCarrito();
-    document.querySelector('#badgeCantProductos').innerHTML = productosCarrito.length;
+    document.querySelector('#badgeCantProductos').innerHTML = productosCarrito.length ||0 ;
 }
 
 const generarViewDashboard = (items) => {

@@ -8,44 +8,53 @@ import http from "http";
 const { engine } = handlebars;
 import path from'path';
 import { fileURLToPath } from 'url';
-import passport from 'passport';
+import { Server } from 'socket.io'; 
 
+import socketInit from '../utils/sockets.js';
 import routerCarrito from "../routes/carrito.js"
 import routerProductos from "../routes/productos.js"
 import routerShop from "../routes/shop.js"
-import routerUsers from "../routes/users.js"
+import routerOrdenes from "../routes/ordenes.js"
+import routerUsers from "../routes/usuarios.js"
+import routerMensajes from "../routes/mensajes.js"
+import routerInformation from "../routes/info.js"
 
-import { baseSession } from '../config/session.js';
-import { initializePassport } from '../config/passport.config.js';
+import config from '../config/config.js';
 import logger from '../utils/logger.js'
 import { mongoConnection } from '../config/db.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-class Server {
+class App {
 
     constructor() {
         this.app  = express();
         this.server = http.Server(this.app);
-        this.port = process.env.PORT ? process.env.PORT : argv.port ? argv.port : 8080;
-        this.modo = process.env.MODO || 'cluster';
+        this.io = new Server(this.server);
+        this.port = config.app.port;
+        this.modo = config.app.modo;
         this.logger = logger;
 
         this.paths = {
-            productos: '/api/productos',
-            carrito:   '/api/carrito',
-            users:     '/api/usuarios',
-            shop:      '/',
+            productos:  '/api/productos',
+            carrito:    '/api/carrito',
+            users:      '/api/usuarios',
+            orders:     '/api/ordenes',
+            mensajes:   '/api/mensajes',
+            informacion:'/api/informacion',
+            shop:       '/',
         }
 
         this.conectarDB();
         this.middlewares();
+        this.views();
         this.routes();
+        this.sockets();
     }
 
     async conectarDB(){
-        if (process.env.ENGINE == 'MONGODB'){
+        if (config.app.persistence == 'MONGODB'){
             await mongoConnection();
         }
     }
@@ -60,10 +69,32 @@ class Server {
         }));
 
         this.app.use(cookieParser());
-        this.app.use(baseSession);
-        initializePassport();
-        this.app.use(passport.initialize());
-        this.app.use(passport.session());
+        this.app.set("logger", this.logger);
+  
+    }
+
+    routes() {
+        this.app.use( this.paths.users, routerUsers );
+        this.app.use( this.paths.productos, routerProductos);
+        this.app.use( this.paths.carrito, routerCarrito );
+        this.app.use( this.paths.shop, routerShop );
+        this.app.use( this.paths.orders, routerOrdenes );
+        this.app.use( this.paths.mensajes, routerMensajes );
+        this.app.use( this.paths.informacion, routerInformation );
+
+        this.app.use('*', (req, res) => {
+            const path = req.originalUrl;
+            const metodo = req.method;
+            const descripcion = `ruta ${path} método ${metodo} no implementada`
+            this.logger.warn(descripcion)
+            res.status(401).json({
+                error: -2,
+                descripcion
+            });
+        });
+    }
+
+    views() {
         this.app.engine(
             "hbs",
             engine({
@@ -77,30 +108,14 @@ class Server {
                 }
             })
           );
-          
+        
         this.app.set("views", "./views");
         this.app.set("view engine", "hbs");
-        this.app.set("logger", this.logger);
-  
     }
 
-    routes() {
-        this.app.use( this.paths.users, routerUsers );
-        this.app.use( this.paths.productos, routerProductos);
-        this.app.use( this.paths.carrito, routerCarrito );
-        this.app.use( this.paths.shop, routerShop );
-
-
-        this.app.use('*', (req, res) => {
-            const path = req.originalUrl;
-            const metodo = req.method;
-            const descripcion = `ruta ${path} método ${metodo} no implementada`
-            this.logger.warn(descripcion)
-            res.status(401).json({
-                error: -2,
-                descripcion
-            });
-        });
+    sockets() {
+        this.app.set('io',this.io);
+        this.io.on('connection', socketInit );
     }
 
     start() {
@@ -131,4 +146,4 @@ class Server {
 
 }
 
-export default Server;
+export default App;

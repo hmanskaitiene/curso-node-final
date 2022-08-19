@@ -1,6 +1,6 @@
-import {Producto} from '../../daos/index.js';
-import {ContenedorArchivo} from '../../containers/index.js';
-import {store_file} from "../../config/db.js";
+import { Producto } from '../../daos/index.js';
+import { ContenedorArchivo } from '../../containers/index.js';
+import { store_file } from "../../config/db.js";
 
 
 class CarritosDaoArchivo extends ContenedorArchivo {

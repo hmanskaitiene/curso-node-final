@@ -1,4 +1,5 @@
 import winston from 'winston';
+import config from '../config/config.js';
 
 const errorFilter = winston.format((info, opts) => {
     return info.level === 'error' ? info : false;
@@ -9,7 +10,7 @@ const warnFilter = winston.format((info, opts) => {
 });
   
 const logger = winston.createLogger({
-    level: process.env.LOG_LEVEL || 'info',
+    level: config.app.logLevel,
     transports: [
         new winston.transports.Console({level: "info"})
         ,

@@ -3,7 +3,7 @@ const btnLogin = document.querySelector('#btnLogin');
 const buttonLoginContentComplete = 'Ingresar'
 const buttonLoginContentLoading = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ${buttonLoginContentComplete}`;
 
-loginForm.addEventListener('submit', function (e) {
+loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     cleanErrors();
     let form_validation = true;
@@ -30,23 +30,17 @@ loginForm.addEventListener('submit', function (e) {
             passwd: formdata.get('passwd'), 
         }
 
-        fetch('/api/usuarios/login', {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {"Content-type": "application/json; charset=UTF-8"}
-        })
-        .then(response => response.json())
-        .then(info => {
-            if (info.authenticated === true){
-                sessionStorage.setItem('userId',info.userId);
-                location.replace('/dashboard')
-            } else {
-                btnLogin.innerHTML = buttonLoginContentComplete
-                btnLogin.disabled = false;
-    
-                renderToasty('error', 'Usuario o contraseña invalidos');
-            }
-        });
+        const response = await apiQuery(`/api/usuarios/login`,'POST',data);
+        const info = await response.json();
+        if (info.authenticated === true){
+            sessionStorage.setItem('userInfo',JSON.stringify(info.user));
+            sessionStorage.setItem('userToken',info.token);
+            location.replace('/productos')
+        } else {
+            btnLogin.innerHTML = buttonLoginContentComplete
+            btnLogin.disabled = false;
+            renderToasty('error', 'Usuario o contraseña invalidos');
+        }
     }
 
 });

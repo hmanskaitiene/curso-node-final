@@ -1,0 +1,19 @@
+<div class="row justify-content-center mb-3">
+    <div class="col-md-12 col-xl-10">
+        {{#if (eq msg.tipo 'SYSTEM') }}
+            <div class="chat-message darker">
+            <img class="rounded-circle article-img" src="{{ msg.imageProfile }}"  style="width: 40px; height: auto;">
+            <p><strong>(Admin)</strong> {{msg.mensaje}}</p>
+            <span class="time-right">{{date-human-read msg.fecha}}</span>
+            </div>
+        {{else}}
+            <div class="chat-message">
+            <img class="rounded-circle article-img" src="{{ msg.imageProfile }}"  style="width: 40px; height: auto;">
+            <p>{{msg.mensaje}}</p>
+            <span class="time-right">{{date-human-read msg.fecha}}</span>
+            </div>
+        {{/if}}  
+    </div>
+</div>
+
+

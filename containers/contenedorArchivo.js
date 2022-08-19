@@ -1,9 +1,9 @@
 import { promises as fs } from 'fs';
-
+import config from '../config/config.js';
 
 class ContenedorArchivo {
     constructor(filename){
-        this.filename = `./${process.env.DATABASE_DIRECTORY}/${filename}`;
+        this.filename = `./${config.app.databaseDirectory}/${filename}`;
     }
 
     async getAll() {

@@ -1,0 +1,75 @@
+    <div class="row mt-3">
+        <div class="col-12 col-md-8">
+            <div class="card text-bg-light">
+                <div class="card-body">
+                    <h3>Datos personales</h3>
+                    <form autocomplete="off" id="profileForm" method="POST">
+                        <div class="row">
+                            <div class="col-md-6 mt-3">
+                                <div class="form-group">
+                                    <label for="nombre" class="form-label">Ingrese su nombre:</label>
+                                    <input class="form-control" type="text" id="nombre" name="nombre" value="{{userLogged.nombre}}" autofocus />
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <div class="form-group">
+                                    <label for="email" class="form-label">Ingrese su email:</label>
+                                    <input class="form-control" type="text" id="email" name="email"  value="{{userLogged.email}}"/>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mt-3">
+                                <div class="form-group">
+                                    <label for="direccion" class="form-label">Ingrese su dirección:</label>
+                                    <input class="form-control" type="text" id="direccion"name="direccion"   value="{{userLogged.direccion}}"/>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mt-3">
+                                <div class="form-group">
+                                    <label for="edad" class="form-label">Ingrese su edad:</label>
+                                    <input class="form-control" type="number" id="edad"name="edad"   value="{{userLogged.edad}}"/>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mt-3">
+                                <div class="form-group">
+                                    <label for="telefono" class="form-label">Ingrese su teléfono:</label>
+                                    <input class="form-control" type="tel" id="telefono"name="telefono"   value="{{userLogged.telefono}}"/>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group mt-3" align="right">
+                            <button class="btn btn-success" type="submit" id="btnProfile">Guardar</button>
+                        </div>
+                    </form>                  
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 mt-3 mt-md-0">
+            <div class="card mb-4 text-bg-light">
+            <div class="card-body text-center">
+                <form autocomplete="off" id="profileImageForm" method="POST" enctype="multipart/form-data">
+                    <img src="{{userLogged.imageProfile}}" alt="avatar"
+                    class="rounded-circle img-fluid" style="width: 150px;" id="profileImageDisplay">
+                    <div>
+                        <div class="form-group mt-3">
+                            <label for="profileImage" class="form-label">Seleccione una imagen para su perfil:</label>
+                            <input class="form-control" type="file" id="profileImage" name="profileImage" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <button class="btn btn-success" type="submit" id="btnProfileImage">Actualizar imagen</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>

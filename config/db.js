@@ -1,10 +1,8 @@
-import dotenv from 'dotenv';
 import mongoose from 'mongoose'
 import knex from "knex";
 import {initializeApp,applicationDefault} from 'firebase-admin/app';
 import {getFirestore} from 'firebase-admin/firestore';
-
-dotenv.config();
+import config from '../config/config.js';
 
 
 let knexConnection;
@@ -16,7 +14,7 @@ let store_file;
 const options_sqlite = {
     client:'sqlite3',
     connection:{
-        filename:`./${process.env.DATABASE_DIRECTORY}/${process.env.SQLITE_FILENAME}`
+        filename:`./${config.app.databaseDirectory}/${config.app.sqliteFilename}`
     },
     useNullAsDefault:true,
 }
@@ -24,19 +22,19 @@ const options_sqlite = {
 const options_mariadb = {
     client:'mysql',
     connection:{
-        host: process.env.MARIADB_HOST || "127.0.0.1",
-        user:process.env.MARIADB_USER || "root",
-        password:process.env.MARIADB_PASSWORD || "",
-        database:process.env.MARIADB_DATABASE || "ecommerce"
+        host: config.app.mariadbHost,
+        user: config.app.mariadbUser,
+        password: config.app.mariadbPassword,
+        database: config.app.mariadbDatabase,
     }
 }
 
-if (process.env.ENGINE == 'MARIADB'){
+if (config.app.persistence == 'MARIADB'){
     knexConnection = knex(options_mariadb)
     knexConnectionOptions = options_mariadb
 }
 
-if (process.env.ENGINE == 'SQLITE'){
+if (config.app.persistence == 'SQLITE'){
     knexConnection = knex(options_sqlite)
     knexConnectionOptions = options_sqlite
 }
@@ -44,7 +42,7 @@ if (process.env.ENGINE == 'SQLITE'){
 
 const mongoConnection = async() =>{
     try{
-        await mongoose.connect(process.env.MONGODB_CNN,{
+        await mongoose.connect(config.app.mongoCnn,{
             useNewUrlParser:true,
             useUnifiedTopology:true,
         });
@@ -63,23 +61,25 @@ const getFirebaseConnection = () => {
     return db;
 };
 
-if (process.env.ENGINE == 'FIREBASE'){
+if (config.app.persistence == 'FIREBASE'){
     firebaseConnection = await getFirebaseConnection();
 }
 
-if (process.env.ENGINE == 'MEMORIA'){
+if (config.app.persistence == 'MEMORIA'){
     store_memoria = {
         productos_memoria:[],
         carritos_memoria:[],
-        usuarios_memoria:[]
+        usuarios_memoria:[],
+        mensajes_memoria:[]
     }
 }
 
-if (process.env.ENGINE == 'FILE'){
+if (config.app.persistence == 'FILE'){
     store_file = {
-        productos_file : process.env.FILENAME_PRODUCTOS || 'productos.json',
-        carritos_file : process.env.FILENAME_CARRITOS || 'carritos.json',
-        usuarios_file : process.env.FILENAME_USUARIOS || 'usuarios.json'
+        productos_file : config.app.filenameProductos,
+        carritos_file : config.app.filenameCarritos,
+        usuarios_file : config.app.filenameUsuarios,
+        mensajes_file : config.app.filenameMensajes,
     }
 }
 

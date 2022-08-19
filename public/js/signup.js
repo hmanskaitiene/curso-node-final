@@ -9,7 +9,7 @@ const signupForm = document.querySelector("#signupForm")
 const btnSignup = document.querySelector('#btnSignup');
 const buttonContentComplete = 'Registrar'
 const buttonContentLoading = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ${buttonContentComplete}`;
-signupForm.addEventListener('submit', function (e) {
+signupForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     cleanErrors();
     let form_validation = true;
@@ -61,7 +61,7 @@ signupForm.addEventListener('submit', function (e) {
         let data = {
             nombre: formdata.get('nombre'),
             email: formdata.get('email'),
-            passwd: formdata.get('passwd'), 
+            password: formdata.get('passwd'), 
             direccion: formdata.get('direccion'),
             edad: formdata.get('edad'),
             telefono: phoneInput.getNumber(),
@@ -69,38 +69,33 @@ signupForm.addEventListener('submit', function (e) {
 
         btnSignup.innerHTML = buttonContentLoading;
         btnSignup.disabled = true;
-        fetch('/api/usuarios/signup', {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {"Content-type": "application/json; charset=UTF-8"}
-        })
-        .then(response => response.json())
-        .then(info => {
-            if (info.registered === true){
-                sessionStorage.setItem('userInfo',{userId:info.userId});
-                let formData = new FormData();
-                const profile = document.getElementById('profileImage');
-                formData.append("profileImage", profile.files[0]);
-                return fetch('/api/usuarios/userImageUpload', {
-                  method: 'POST',
-                  body: formData
-                });
-            } else {
-                btnSignup.innerHTML = buttonContentComplete;
-                btnSignup.disabled = false;
-                renderToasty('error', 'El correo electrónico ya está registrado. Utilice otro que tenga disponible.');
-            }
-        })
-        .then(response => response.json())
-        .then(imageProfile => {
-            if (imageProfile.uploaded === true){
-                location.replace('/dashboard')
+
+        const response = await apiQuery(`/api/usuarios/signup`,'POST',data);
+        const info = await response.json();
+
+        if (info.registered === true){
+            sessionStorage.setItem('userToken',info.token);
+            let formData = new FormData();
+            const profile = document.getElementById('profileImage');
+            formData.append("profileImage", profile.files[0]);
+
+            const response = await apiQuery(`/api/usuarios/userImage/${info.id}`,'POST',formData,false);
+            const img = await response.json();
+
+            if (img.uploaded === true){
+                sessionStorage.setItem('userInfo',JSON.stringify(img));
+                location.replace('/productos')
             } else {
                 btnSignup.innerHTML = buttonContentComplete;
                 btnSignup.disabled = false;
                 renderToasty('error', 'No se pudo registrar el usuario');
             }
-        });
+
+        } else {
+            btnSignup.innerHTML = buttonContentComplete;
+            btnSignup.disabled = false;
+            renderToasty('error', info.error);
+        }
     }
 
 });

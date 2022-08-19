@@ -1,88 +1,71 @@
 
 const generarCarrito = async () => {
-    let userId = sessionStorage.getItem('userId');
-    let cartId = localStorage.getItem(`cartId_${userId}`);
+    
+    let { email } = JSON.parse(sessionStorage.getItem('userInfo'));
+    let cartId = sessionStorage.getItem('cartId');
 
     if (cartId === null) {
-        const response = await fetch("/api/carrito",{method: "POST"});
-        const {id} = await response.json();
-        localStorage.setItem(`cartId_${userId}`,id)
+        const response = await apiQuery(`/api/carrito/email/${email}`)
+        const { id } = await response.json();
+        sessionStorage.setItem('cartId',id)
         cartId = id;
     }
-
-    const response = await fetch(`/api/carrito/${cartId}/productos`);
+    const response = await apiQuery(`/api/carrito/${cartId}/productos`)
     const products = await response.json();
     return products;
 }
 
-const agregarProducto = (button, id, rebuildView = false) => {
-    let userId = sessionStorage.getItem('userId');
-    let cartId = localStorage.getItem(`cartId_${userId}`);
+const agregarProducto = async (button, id, rebuildView = false) => {
+    let cartId = sessionStorage.getItem('cartId');
 
     button.innerHTML = buttonAddContentLoading;
     button.disabled = true;
-    fetch(`/api/carrito/${cartId}/productos`, {
-        method: "POST",
-        body: JSON.stringify([{id}]),
-        headers: {"Content-type": "application/json; charset=UTF-8"}
-    })
-    .then(response => response.json())
-    .then((cart)=> {
-        return fetch(`/api/carrito/${cartId}/productos`);  
-    })
-    .then(response => response.json())
-    .then((productosCarrito) => {
-        button.innerHTML = buttonAddContentComplete;
-        button.disabled = false;
-        document.querySelector('#badgeCantProductos').innerHTML = productosCarrito.length;
-        if (rebuildView) generarViewCarrito(productosCarrito);
-        renderToasty('success', 'Se ha agregado el producto al carrito','top','left');
-    })
+    const response = await apiQuery(`/api/carrito/${cartId}/productos`,'POST',[{id}]);
+    const productosCarrito = await response.json();
+
+    button.innerHTML = buttonAddContentComplete;
+    button.disabled = false;
+
+    document.querySelector('#badgeCantProductos').innerHTML = productosCarrito.length;
+    if (rebuildView) generarViewCarrito(productosCarrito);
+    renderToasty('success', 'Se ha agregado el producto al carrito','top','left');
 }
 
-const eliminarProducto = (button, id) => {
-    let userId = sessionStorage.getItem('userId');
-    let cartId = localStorage.getItem(`cartId_${userId}`);
+const eliminarProducto = async (button, id) => {
+    let cartId = sessionStorage.getItem('cartId');
 
     button.disabled = true;
     button.innerHTML = buttonDeleteContentLoading;
-    fetch(`/api/carrito/${cartId}/productos/${id}`, {method: "DELETE"})
-    .then(response => response.json())
-    .then((cart)=> {
-        return fetch(`/api/carrito/${cartId}/productos`);  
-    })
-    .then(response => response.json())
-    .then((productosCarrito) => {
-        button.innerHTML = buttonDeleteContentComplete;
-        button.disabled = false;
-        generarViewCarrito(productosCarrito);
-        renderToasty('success', 'Se ha eliminado el producto');
-    })
+    const response = await apiQuery(`/api/carrito/${cartId}/productos/${id}`,'DELETE');
+    const productosCarrito = await response.json();
+
+    button.innerHTML = buttonDeleteContentComplete;
+    button.disabled = false;
+    generarViewCarrito(productosCarrito);
+    renderToasty('success', 'Se ha eliminado el producto');
 }
 
-const finalizarCompra =  (button) => {
-    let userId = sessionStorage.getItem('userId');
-    let cartId = localStorage.getItem(`cartId_${userId}`);
-    // Por el momento se borra el carrito....no se si sera asi
+const finalizarCompra = async (button) => {
+    let cartId = sessionStorage.getItem('cartId');
+    
     button.innerHTML = buttonOrderContentLoading
     button.disabled = true;
-    fetch(`/api/carrito/${cartId}/usuario/${userId}`, {method: "PUT"})
-    .then(response => response.json())
-    .then(()=> {
-        return fetch(`/api/carrito/${cartId}`, {method: "DELETE"})
+
+    const response = await apiQuery(`/api/ordenes/${cartId}`,'POST');
+    const orderInfo = await response.json();
+
+    sessionStorage.removeItem('cartId');
+    button.innerHTML = buttonOrderContentComplete;
+    Swal.fire({
+        title: 'Compra realizada',
+        text: 'Su pedido ha sido registrado con éxito.',
+        icon: 'success'
     })
-    .then(response => response.json())
-    .then(()=> {
-        localStorage.removeItem(`cartId_${userId}`);
-        button.innerHTML = buttonOrderContentComplete;
-        return Swal.fire(
-            'Compra realizada',
-            'Su pedido ha sido registrado con éxito.',
-            'success'
-        )
+    .then((result) => {
+        if (result.isConfirmed) {
+            location.replace('/productos')
+        }
     })
-    .then(() => {
-        location.replace('/dashboard')
-    });
+
 
 }

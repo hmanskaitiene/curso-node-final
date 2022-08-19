@@ -1,111 +1,48 @@
-import { Carrito }  from '../daos/index.js';
-import { Usuario }  from '../daos/index.js';
-import { enviarMailAdministrador } from '../utils/mailer.js';
-import { sendMessage } from '../utils/messenger.js';
-
-const cart= new Carrito();
-const usuario= new Usuario();
+import CartService  from '../services/carrito.js';
+const cartService = new CartService();
 
 const addCart = async(req, res) => {
-    const id = await cart.save()
-    res.status(201).json({id});
+    const response = await cartService.addCart(req.body);
+    res.status(response.status).json(response.data)
 }
 
 const deleteCart = async (req, res) => {
     const id = req.params.id;
-    const carrito = await cart.getById(id);
-    if (carrito !== null) {
-        await cart.deleteById(id)
-        res.status(200).json({mensaje: `Se ha eliminado el carrito ${id}`});
-    } else {
-        const error = `carrito no encontrado`;
-        req.app.get('logger').error(error);
-        res.status(400).json({error});
-    }
-}
-
-const getProductsCart = async (req, res) => {
-    try {
-        const id = req.params.id;
-        const carrito = await cart.getById(id);
-        if (carrito !== null) {
-            const productos = await cart.getProductsCart(id);
-            res.status(200).json(productos);
-        } else {
-            const error = `carrito no encontrado`;
-            req.app.get('logger').error(error);
-            res.status(400).json({error});
-        }
-    } catch (error) {
-        req.app.get('logger').error(error);
-        res.status(400).json({error});
-    }
-
+    const response = await cartService.deleteCart(id);
+    res.status(response.status).json(response.data)
 }
 
 const addProductsCart = async (req, res) => {
-    try {
-        const id = req.params.id;
-        const productos = req.body;
-        const carrito = await cart.getById(id);
-        if (carrito !== null) {
-            await cart.addProductsCart(productos, id);
-            res.status(200).json({mensaje: `Productos agregados al carrito: ${id}`});
-        } else {
-            const error = `carrito no encontrado`;
-            req.app.get('logger').error(error);
-            res.status(400).json({error});
-        }
-    } catch (error) {
-        req.app.get('logger').error(error);
-        res.status(400).json({error});
-    }
+    const id = req.params.id;
+    const productos = req.body;
+    const response = await cartService.addProductsCart(id, productos);
+    res.status(response.status).json(response.data) 
+}
 
+const getProductsCart = async (req, res) => {
+    const cartId = req.params.id;
+    const response = await cartService.getProductsCart(cartId);
+    res.status(response.status).json(response.data) 
 }
 
 const deleteProductCart = async (req, res) => {
-    const id = req.params.id;
-    const id_prod = req.params.id_prod;
-    const carrito = await cart.getById(id);
-    if (carrito !== null) {
-        await cart.deleteProductCart(id_prod, id);
-        res.status(200).json({mensaje: `Se ha eliminado el producto ${id_prod} del carrito: ${id}`});
-    } else {
-        const error = `carrito no encontrado`;
-        req.app.get('logger').error(error);
-        res.status(400).json({error});
-    }
+    const cartId = req.params.id;
+    const prodId = req.params.id_prod;
+    const response = await cartService.deleteProductCart(cartId, prodId);
+    res.status(response.status).json(response.data) 
 }
 
-const finishOrder = async (req, res) => {
-    try {
-        const idCart = req.params.idCart;
-        const idUser = req.params.idUser;
-        const user = await usuario.getById(idUser);
-        const productos = await cart.getProductsCart(idCart);
-
-        const smsMsg = `Gracias ${user.nombre}, hemos recibido su pedido y se encuentra en proceso de preparación. Próximamente recibirá novedades en su email.`
-        const subject = `Nuevo pedido de ${user.nombre} (${user.email})`
-    
-        //Envío de SMS
-        await sendMessage(user.telefono, smsMsg)
-        //Envío de Whatsapp
-        await sendMessage(user.telefono, subject, true)
-        //Envío de mail
-        await enviarMailAdministrador('nuevoPedido', subject, {user,productos});
-    
-        res.status(200).json({mensaje: `Se ha finalizado el carrito ${idCart} del usuario: ${idUser}`});        
-    } catch (error) {
-        req.app.get('logger').error(error);
-        res.status(400).json({error});        
-    }
+const getCartByEmail = async (req, res) => {
+    const email = req.params.email;
+    const response = await cartService.getCartByEmail(email);
+    res.status(response.status).json(response.data) 
 }
 
 export default {
     addCart,
     deleteCart,
-    getProductsCart,
     addProductsCart,
+    getProductsCart,
     deleteProductCart,
-    finishOrder,
+    getCartByEmail,
 }

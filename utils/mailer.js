@@ -3,14 +3,16 @@ import Handlebars from 'handlebars';
 import path from 'path';
 import {fileURLToPath} from 'url';
 import { promises as fs } from 'fs';
+
+import config from '../config/config.js';
 import logger from '../utils/logger.js';
 
 const transporter = createTransport({
-    host: process.env.SMTP_HOST,
+    host: config.app.smtpHost,
     port: 587,
     auth: {
-        user: process.env.SMTP_USERNAME,
-        pass: process.env.SMTP_PASSWORD
+        user: config.app.smtpUsername,
+        pass: config.app.smtpPassword
     }
 });
 
@@ -49,7 +51,7 @@ const enviarMailAdministrador = async(type, subject, data) => {
         const template = Handlebars.compile(emailTemplateSource);
         const htmlMessage = template(templateContent);
 
-        await enviarMail(process.env.ADMIN_EMAIL, subject, htmlMessage);            
+        await enviarMail(config.app.adminEmail, subject, htmlMessage);            
     } catch (error) {
         logger.error(error.message)
     }

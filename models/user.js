@@ -30,6 +30,11 @@ const UserSchema = new mongoose.Schema({
     imageProfile: {
         type: String,
         required: false,
+    },
+    rol:{
+        type: String,
+        required: true,
+        default: 'USER'
     }
 })
 

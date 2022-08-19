@@ -1,18 +1,19 @@
 import twilio from 'twilio'
+import config from '../config/config.js';
 import logger from '../utils/logger.js';
 
-const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
+const client = twilio(config.app.twilioAccountSid, config.app.twilioAuthToken)
 
 const sendMessage = async (receiver, body, wa = false) => {
     try {
         let from,to;
         // Los numeros destinos estan limitados a variables de entorno por la version trial
         if (wa) {
-            from = `whatsapp:${process.env.TWILIO_PHONE_WAP_SENDER}`;
-            to = `whatsapp:${process.env.TWILIO_PHONE_WAP_SANDBOX}`;
+            from = `whatsapp:${config.app.twilioPhoneWapSender}`;
+            to = `whatsapp:${config.app.twilioPhoneWapSandbox}`;
         } else {
-            from = process.env.TWILIO_PHONE_SENDER;
-            to = process.env.TWILIO_PHONE_SANDDOX;
+            from = config.app.twilioPhoneSender;
+            to = config.app.twilioPhoneWapSandbox;
         } 
         const msg = await client.messages.create({from,to,body});
      } catch (error) {

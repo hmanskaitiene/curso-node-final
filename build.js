@@ -1,20 +1,13 @@
-import dotenv from 'dotenv';
-dotenv.config();
-/*
-if (!process.env.ENGINE) {
-    console.error("**VARIABLES DE ENTONRNO NO DEFINIDAS. UTILIZAR ARCHIVO .env.sample como referencia**");
-    return process.exit(1);
-}
-*/
+import config from './config/config.js';
 
 import {knexConnection,knexConnectionOptions} from "./config/db.js";
 import Knex from "Knex";
 
 
 (async() =>{
-    console.log(`Checkeando la estructura para el engine: ${process.env.ENGINE}`);
+    console.log(`Checkeando la estructura para el engine: ${config.app.persistence}`);
 
-    if (process.env.ENGINE == 'MARIADB'){
+    if (config.app.persistence == 'MARIADB'){
         // Solo se utiliza esta conexion sin la base seleccionada para la creación
         const create_connection = Knex({
             client:knexConnectionOptions.client,

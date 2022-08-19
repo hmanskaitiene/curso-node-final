@@ -1,4 +1,4 @@
-import {ContenedorMongoDB} from '../../containers/index.js';
+import { ContenedorMongoDB } from '../../containers/index.js';
 import Producto from '../../models/producto.js';
 
 class ProductosDaoMongoDB extends ContenedorMongoDB {
@@ -19,9 +19,12 @@ class ProductosDaoMongoDB extends ContenedorMongoDB {
 
     async addProducts(products){
         try{
+            const productsAdded = [];
             for(const p of products){
-                await this.save(p);
+                productsAdded.push(await this.save(p));
             }
+
+            return productsAdded;
         }
         catch(e){
             return `Hubo un error al actualizar el carrito: "${e}"`

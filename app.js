@@ -1,9 +1,4 @@
-import dotenv from 'dotenv';
-dotenv.config();
-import Server from './models/server.js';
+import App from './models/app.js';
 
-//Variable administrador definida temporamente
-global.ADMINISTRADOR = true;
-
-const server = new Server();
-server.start();
+const app = new App();
+app.start();

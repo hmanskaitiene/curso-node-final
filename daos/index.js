@@ -1,5 +1,4 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import config from '../config/config.js';
 
 import CarritosDaoArchivo from './carritos/carritosDaoArchivo.js';
 import CarritosDaoMemoria from './carritos/carritosDaoMemoria.js';
@@ -22,40 +21,45 @@ import UsuariosDaoSQLite from './usuarios/usuariosDaoSQLite.js';
 import UsuariosDaoMongoDB from './usuarios/usuariosDaoMongoDB.js';
 import UsuariosDaoFirebase from './usuarios/usuariosDaoFirebase.js';
 
-let productoSelected,carritoSelected,usuarioSelected;
+import OrdenesDaoMongoDB from './ordenes/ordenesDaoMongoDB.js';
+import MensajesDaoMongoDB from './mensajes/mensajesDaoMongoDB.js';
+
+let productoSelected,carritoSelected,usuarioSelected,ordenSelected,mensajeSelected;
 
 
-if (process.env.ENGINE == 'MONGODB'){
+if (config.app.persistence == 'MONGODB'){
     productoSelected = ProductosDaoMongoDB;
     carritoSelected = CarritosDaoMongoDB;
     usuarioSelected = UsuariosDaoMongoDB;
+    ordenSelected = OrdenesDaoMongoDB;
+    mensajeSelected = MensajesDaoMongoDB;
 }
 
-if (process.env.ENGINE == 'SQLITE'){
+if (config.app.persistence == 'SQLITE'){
     productoSelected = ProductosDaoSQLite;
     carritoSelected = CarritosDaoSQLite;
     usuarioSelected = UsuariosDaoSQLite;
 }
 
-if (process.env.ENGINE == 'MARIADB'){
+if (config.app.persistence == 'MARIADB'){
     productoSelected = ProductosDaoMariaDB;
     carritoSelected = CarritosDaoMariaDB;
     usuarioSelected = UsuariosDaoMariaDB;
 }
 
-if (process.env.ENGINE == 'FILE'){
+if (config.app.persistence == 'FILE'){
     productoSelected = ProductosDaoArchivo;
     carritoSelected = CarritosDaoArchivo;
     usuarioSelected = UsuariosDaoArchivo;
 }
 
-if (process.env.ENGINE == 'FIREBASE'){
+if (config.app.persistence == 'FIREBASE'){
     productoSelected = ProductosDaoFirebase;
     carritoSelected = CarritosDaoFirebase;
     usuarioSelected = UsuariosDaoFirebase;
 }
 
-if (process.env.ENGINE == 'MEMORIA'){
+if (config.app.persistence == 'MEMORIA'){
     productoSelected = ProductosDaoMemoria;
     carritoSelected = CarritosDaoMemoria;
     usuarioSelected = UsuariosDaoMemoria;
@@ -66,4 +70,6 @@ export {
     productoSelected as Producto,
     carritoSelected as Carrito,
     usuarioSelected as Usuario,
+    ordenSelected as Orden,
+    mensajeSelected as Mensaje,
 }

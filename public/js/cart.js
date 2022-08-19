@@ -13,19 +13,24 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 const loadInitialData = async () => {
+    await generarMenu();
     const productosCarrito = await generarCarrito();
     generarViewCarrito(productosCarrito);
 }
 
 const generarViewCarrito = (items) => {
+
     fetch('/templates/carrito.hbs')
     .then(response => response.text())
     .then(plantilla => {
+
         const template = Handlebars.compile(plantilla);
+
         const totalCarrito = items.length ? items.map(item => item.total).reduce((prev, next) => prev + next) : 0;
         const html = template({ items, totalCarrito })
+
         document.getElementById('productosList').innerHTML = html
-        document.querySelector('#badgeCantProductos').innerHTML = items.length;
+        document.querySelector('#badgeCantProductos').innerHTML = items.length || 0;
         btnFinalizarCompra.disabled = items.length > 0 ? false : true ;
 
         const addButtons = document.querySelectorAll('.add-button');
@@ -42,7 +47,9 @@ const generarViewCarrito = (items) => {
             eliminarProducto(e.target,e.target.getAttribute("data-id"));
           });
         });
+
     })
+
 }
 
 btnFinalizarCompra.addEventListener('click', (e)=> {

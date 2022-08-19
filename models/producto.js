@@ -11,11 +11,11 @@ const ProductoSchema = new mongoose.Schema({
     },
     codigo:{
         type: String,
-        required: false,
+        required: [true, 'El codigo es obligatorio'],
     },
     foto:{
         type: String,
-        required: false,
+        required: [true, 'La imagen es obligatoria'],
     },
     precio:{
         type: Number,
@@ -28,11 +28,15 @@ const ProductoSchema = new mongoose.Schema({
     timestamp:{
       type: Number,
       required: true,
-  }
-});
+    },
+    categoria:{
+        type: String,
+        required: [true, 'La categoria es obligatoria'],
+    },
+}, { timestamps: true, versionKey: false });
 
 ProductoSchema.methods.toJSON = function(){
-  const {__v,_id,...data} = this.toObject();
+  const {_id,...data} = this.toObject();
   data.id = _id;
   return data;
 }

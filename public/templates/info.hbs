@@ -1,0 +1,36 @@
+<div class="row justify-content-center mb-3">
+    <div class="col-md-12 col-xl-10">
+        <div class="card">
+            <div class="card-body">
+                <h5>Sistema</h5>
+                <ul class="list-group ">
+                {{#each info.info}}
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">{{@key}}</div>
+                        </div>
+                        <span class="badge text-bg-secondary">{{this}}</span>
+                    </li>
+                {{/each}}
+                </ul>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5>Variables de entorno</h5>
+                <ul class="list-group ">
+                {{#each info.app}}
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">{{@key}}</div>
+                        </div>
+                        <span class="badge text-bg-secondary">{{this}}</span>
+                    </li>
+                {{/each}}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
