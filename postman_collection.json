@@ -7,32 +7,13 @@
 	},
 	"item": [
 		{
-			"name": "getProducto",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/api/productos",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"productos"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "addProductos",
+			"name": "createUser",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "[\r\n    {\r\n        \"nombre\": \"Licuadora\",\r\n        \"descripcion\": \"Esta es la descripcion de la licuadora\",\r\n        \"codigo\": \"AA00XX\",\r\n        \"foto\": \"https://www.google.com/search\",\r\n        \"precio\": 200,\r\n        \"stock\": 500\r\n    },\r\n    {\r\n        \"nombre\": \"Aspiradora\",\r\n        \"descripcion\": \"Esta es la descripcion de la aspiradora\",\r\n        \"codigo\": \"AA00XX\",\r\n        \"foto\": \"https://www.google.com/search\",\r\n        \"precio\": 200,\r\n        \"stock\": 500\r\n    }\r\n]",
+					"raw": "{\r\n    \"nombre\": \"Usuario de prueba\",\r\n    \"email\": \"prueba@mail.com\",\r\n    \"password\": \"123\", \r\n    \"direccion\": \"Casa 123\",\r\n    \"edad\": \"30\",\r\n    \"telefono\": \"+5401151231234\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -40,215 +21,15 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/productos",
+					"raw": "localhost:8080/api/usuarios/signup",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"api",
-						"productos"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "updateProducto",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "    {\r\n        \"nombre\": \"Tornillo\",\r\n        \"descripcion\": \"Esta es la descripcion del tornillo\",\r\n        \"codigo\": \"AA0025\",\r\n        \"foto\": \"https://cdn3.iconfinder.com/data/icons/education-209/64/paint-color-pallete-brush-academy-128.png\",\r\n        \"precio\": 200,\r\n        \"stock\": 500,\r\n        \"timestamp\": 1655941358220\r\n    }",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/api/productos/25",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"productos",
-						"25"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "deleteProduct",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/api/productos/4",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"productos",
-						"4"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "addCart",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/api/carrito",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"carrito"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "deleteCart",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/api/carrito/2",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"carrito",
-						"2"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getProductsCart",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/api/carrito/1/productos",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"carrito",
-						"1",
-						"productos"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "addProductsCart",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "[\r\n    {\r\n        \"id\": 7\r\n    },\r\n    {\r\n        \"id\": 5\r\n    },\r\n    {\r\n        \"id\": 6\r\n    }\r\n]",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/api/carrito/1/productos",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"carrito",
-						"1",
-						"productos"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "finishOrder",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/api/carrito/1/usuario/1",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"carrito",
-						"1",
-						"usuario",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "deleteProductCart",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/api/carrito/3/productos/4",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"carrito",
-						"3",
-						"productos",
-						"4"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "RutaNoExistente",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/ruta_no_existente",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"ruta_no_existente"
+						"usuarios",
+						"signup"
 					]
 				}
 			},
@@ -284,13 +65,65 @@
 			"response": []
 		},
 		{
-			"name": "createUser",
+			"name": "getProducto",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MmRkYjBiMjhkY2QzNDllNjFiMzdjNTYiLCJpYXQiOjE2NjA4NDU2MjQsImV4cCI6MTY2MDg2MDAyNH0.HX9hgysbc1dlla2dTu7M9IzLmgq_1ra1jLLl6iv9lfw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/productos",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"productos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProductoPorCategoria",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MmU2OWViNTlhYjA0ZmYzOWI5YmI0ZTAiLCJpYXQiOjE2NjA2NjIzNTAsImV4cCI6MTY2MDY3Njc1MH0.NpyCgvdc4OlPXwKicw68FaPRR4VdLcgkwCcqnrZMJO4",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/productos/categoria/Electrodomésticos",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"productos",
+						"categoria",
+						"Electrodomésticos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addProductos",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nombre\": \"Usuario de prueba\",\r\n    \"email\": \"prueba@mail.com\",\r\n    \"passwd\": \"123\", \r\n    \"direccion\": \"Casa 123\",\r\n    \"edad\": \"30\",\r\n    \"telefono\": \"+5401151231234\"\r\n}",
+					"raw": "[\r\n    {\r\n        \"nombre\": \"Licuadora\",\r\n        \"descripcion\": \"Esta es la descripcion de la licuadora\",\r\n        \"codigo\": \"AA00XX\",\r\n        \"foto\": \"https://www.google.com/search\",\r\n        \"precio\": 200,\r\n        \"stock\": 500,\r\n        \"categoria\": \"Electrodomésticos\"\r\n    },\r\n    {\r\n        \"nombre\": \"Aspiradora\",\r\n        \"descripcion\": \"Esta es la descripcion de la aspiradora\",\r\n        \"codigo\": \"AA00XX\",\r\n        \"foto\": \"https://www.google.com/search\",\r\n        \"precio\": 200,\r\n        \"stock\": 500,\r\n        \"categoria\": \"Electrodomésticos\"\r\n    }\r\n]",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -298,15 +131,405 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/usuarios/signup",
+					"raw": "localhost:8080/api/productos",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"api",
-						"usuarios",
-						"signup"
+						"productos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateProducto",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"nombre\": \"Licuadora MODI\",\r\n        \"descripcion\": \"La licuadora Moretti Masterblend te va a ayudar a obtener resultados increíbles en todo lo que prepares, ya sean tragos o smoothies refrescantes, salsas o sopas.\",\r\n        \"codigo\": \"AA0012\",\r\n        \"foto\": \"https://res.cloudinary.com/dkz8tl6x9/image/upload/v1658850085/products/licuadora_a63fxp.jpg\",\r\n        \"precio\": 5700,\r\n        \"stock\": 320,\r\n        \"categoria\": \"Electrodomésticos\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/productos/62f18e22892a233c0db97a6c",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"productos",
+						"62f18e22892a233c0db97a6c"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteProduct",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/productos/62faa2aeadfdaddd37dd8197",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"productos",
+						"62faa2aeadfdaddd37dd8197"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addCart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"prueba@mail.com\",\r\n    \"direccion\":\"Casa 123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/carrito",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"carrito"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteCart",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/carrito/62ed1a5d7398c9792ddbe90b",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"carrito",
+						"62ed1a5d7398c9792ddbe90b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProductsCart",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/carrito/62ed36df7415390d819d5395/productos",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"carrito",
+						"62ed36df7415390d819d5395",
+						"productos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addProductsCart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"id\": \"62cc7ac3eb7811a29c277c89\"\r\n    },\r\n    {\r\n        \"id\": \"62cc7ac3eb7811a29c277c8b\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/carrito/62f18827db7fcece25e2182e/productos",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"carrito",
+						"62f18827db7fcece25e2182e",
+						"productos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteProductCart",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/carrito/62ed36df7415390d819d5395/productos/62cc7ac3eb7811a29c277c89",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"carrito",
+						"62ed36df7415390d819d5395",
+						"productos",
+						"62cc7ac3eb7811a29c277c89"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCartByEmail",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"carlos@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/carrito/email/prueba@mail.com",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"carrito",
+						"email",
+						"prueba@mail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createOrder",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/ordenes/62f18827db7fcece25e2182e",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ordenes",
+						"62f18827db7fcece25e2182e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOrderByEmail",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"carlos@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/ordenes/email/prueba@mail.com",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ordenes",
+						"email",
+						"prueba@mail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createMensaje",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"prueba@mail.com\",\r\n    \"mensaje\":\"Este es mi mensaje\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/mensajes",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"mensajes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getMensajes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MmRkYjBiMjhkY2QzNDllNjFiMzdjNTYiLCJpYXQiOjE2NjA3NDcxNzMsImV4cCI6MTY2MDc2MTU3M30.45bkI8yDg8KGdP9Xv6khLXmv3dyq9_3Lwq5aoL4cYhM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"hanskait@gmail.com\",\r\n    \"mensaje\":\"Este es mi mensaje\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/mensajes/prueba@mail.com",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"mensajes",
+						"prueba@mail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getMensajesSenders",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MmRkYjBiMjhkY2QzNDllNjFiMzdjNTYiLCJpYXQiOjE2NjA3NDcxNzMsImV4cCI6MTY2MDc2MTU3M30.45bkI8yDg8KGdP9Xv6khLXmv3dyq9_3Lwq5aoL4cYhM",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/mensajes/senders",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"mensajes",
+						"senders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getInformation",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MmRkYjBiMjhkY2QzNDllNjFiMzdjNTYiLCJpYXQiOjE2NjA3NDcxNzMsImV4cCI6MTY2MDc2MTU3M30.45bkI8yDg8KGdP9Xv6khLXmv3dyq9_3Lwq5aoL4cYhM",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/informacion",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"informacion"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RutaNoExistente",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/ruta_no_existente",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ruta_no_existente"
 					]
 				}
 			},
